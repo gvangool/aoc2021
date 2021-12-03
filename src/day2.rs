@@ -31,6 +31,7 @@ pub struct Instruction {
 pub struct Position {
     horizontal: usize,
     depth: usize,
+    aim: usize,
 }
 
 impl Position {
@@ -38,6 +39,7 @@ impl Position {
         Self {
             horizontal: 0,
             depth: 0,
+            aim: 0,
         }
     }
 
@@ -50,14 +52,37 @@ impl Position {
             Direction::Forward => Self {
                 horizontal: self.horizontal + instruction.units,
                 depth: self.depth,
+                aim: self.aim,
             },
             Direction::Up => Self {
                 horizontal: self.horizontal,
                 depth: self.depth - instruction.units,
+                aim: self.aim,
             },
             Direction::Down => Self {
                 horizontal: self.horizontal,
                 depth: self.depth + instruction.units,
+                aim: self.aim,
+            },
+        }
+    }
+
+    pub fn aim_and_move(self, instruction: &Instruction) -> Self {
+        match instruction.direction {
+            Direction::Forward => Self {
+                horizontal: self.horizontal + instruction.units,
+                depth: self.depth + (self.aim * instruction.units),
+                aim: self.aim,
+            },
+            Direction::Up => Self {
+                horizontal: self.horizontal,
+                depth: self.depth,
+                aim: self.aim - instruction.units,
+            },
+            Direction::Down => Self {
+                horizontal: self.horizontal,
+                depth: self.depth,
+                aim: self.aim + instruction.units,
             },
         }
     }
@@ -89,6 +114,15 @@ pub fn solve_part1(instructions: &[Instruction]) -> usize {
     let mut pos = Position::default();
     for i in instructions {
         pos = pos.move_to(i)
+    }
+    pos.summary()
+}
+
+#[aoc(day2, part2)]
+pub fn solve_part2(instructions: &[Instruction]) -> usize {
+    let mut pos = Position::default();
+    for i in instructions {
+        pos = pos.aim_and_move(i)
     }
     pos.summary()
 }
