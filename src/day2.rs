@@ -30,34 +30,34 @@ pub struct Instruction {
 
 pub struct Position {
     horizontal: usize,
-    vertical: usize,
+    depth: usize,
 }
 
 impl Position {
     pub fn default() -> Self {
         Self {
             horizontal: 0,
-            vertical: 0,
+            depth: 0,
         }
     }
 
     pub fn summary(self) -> usize {
-        self.horizontal * self.vertical
+        self.horizontal * self.depth
     }
 
     pub fn move_to(self, instruction: &Instruction) -> Self {
         match instruction.direction {
             Direction::Forward => Self {
                 horizontal: self.horizontal + instruction.units,
-                vertical: self.vertical,
+                depth: self.depth,
             },
             Direction::Up => Self {
                 horizontal: self.horizontal,
-                vertical: self.vertical - instruction.units,
+                depth: self.depth - instruction.units,
             },
             Direction::Down => Self {
                 horizontal: self.horizontal,
-                vertical: self.vertical + instruction.units,
+                depth: self.depth + instruction.units,
             },
         }
     }
