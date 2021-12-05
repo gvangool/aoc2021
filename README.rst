@@ -1,10 +1,9 @@
 Advent of Code 2021
 ===================
+Learning Rust while solving `AoC 2021 <https://adventofcode.com/2021>`_.
 
-My solutions in Rust to the `AoC 2021 <https://adventofcode.com/2021>`_.
-
-
-Use `cargo-aoc <https://github.com/gobanos/cargo-aoc>`_ to run the solutions.
+This uses `cargo-aoc <https://github.com/gobanos/cargo-aoc>`_ to run the
+solutions and automatically download the input files.
 
 .. code:: bash
 
